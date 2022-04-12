@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_trip_view">
+
+    <fragment
+        android:id="@+id/navigation_trip_view"
+        android:name="com.example.expensetracker.ui.viewtrip.ViewTripFragment"
+        android:label="Trip View"
+        tools:layout="@layout/fragment_trip_view" >
+        <action
+            android:id="@+id/action_navigation_trip_view_to_navigation_expense_view"
+            app:destination="@id/navigation_expense_view" />
+        <action
+            android:id="@+id/action_navigation_trip_view_to_navigation_edit_trip_view"
+            app:destination="@id/navigation_edit_trip_view" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_expense_view"
+        android:name="com.example.expensetracker.ui.viewexpense.ViewExpenseFragment"
+        android:label="Expense View"
+        tools:layout="@layout/fragment_expense_view" >
+        <argument
+            android:name="expenseId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_navigation_expense_view_to_navigation_trip_view"
+            app:destination="@id/navigation_trip_view"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/navigation_trip_view"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_expense_view_to_nagivation_expense_edit"
+            app:destination="@id/nagivation_expense_edit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_edit_trip_view"
+        android:name="com.example.expensetracker.ui.viewtrip.editTrip.EditTripFragment"
+        android:label="Trip Edit View"
+        tools:layout="@layout/fragment_edit_trip" >
+        <action
+            android:id="@+id/action_navigation_edit_trip_view_to_navigation_trip_view"
+            app:destination="@id/navigation_trip_view"
+            app:popUpTo="@id/navigation_trip_view"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_edit_trip_view_to_navigation_add_member_view"
+            app:destination="@id/navigation_add_member_view" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_member_view"
+        android:name="com.example.expensetracker.ui.viewtrip.editTrip.EditMembersFragment"
+        android:label="Add Members"
+        tools:layout="@layout/fragment_add_members" >
+        <action
+            android:id="@+id/action_navigation_add_member_view_to_navigation_edit_trip_view"
+            app:destination="@id/navigation_edit_trip_view"
+            app:popUpTo="@id/navigation_edit_trip_view"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nagivation_expense_edit"
+        android:name="com.example.expensetracker.ui.viewexpense.editExpense.EditExpenseDialog"
+        android:label="Expense Edit"
+        tools:layout="@layout/dialog_edit_expense" >
+        <action
+            android:id="@+id/action_nagivation_expense_edit_to_navigation_expense_view"
+            app:destination="@id/navigation_expense_view"
+            app:popUpTo="@id/navigation_expense_view"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

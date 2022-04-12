@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="32dp"
+    android:paddingEnd="32dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/add_expense"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Specify value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconDrawable="@drawable/ic_baseline_payments_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_expense_editText"
+            android:inputType="number"
+            android:digits="0123456789."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/expense_description"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Add description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_expense">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/expense_description_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/expense_type_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/expense_description"
+        app:layout_constraintStart_toStartOf="@+id/expense_description"
+        app:layout_constraintTop_toBottomOf="@+id/expense_description">
+
+        <RadioButton
+            android:id="@+id/stay_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STAY" />
+
+        <RadioButton
+            android:id="@+id/transport_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TRANSPORT" />
+
+        <RadioButton
+            android:id="@+id/meal_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MEAL" />
+
+        <RadioButton
+            android:id="@+id/other_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OTHER" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/is_group_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Is a group expense?"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expense_type_radio_group" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/members"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/expense_description"
+        app:layout_constraintStart_toStartOf="@+id/expense_description"
+        app:layout_constraintTop_toBottomOf="@+id/is_group_checkbox">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/daeph_members_drawable"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="FriendPhoto"
+            android:src="@drawable/elected_members"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/participants_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Contributors"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/daeph_members_drawable"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nr_participants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="0"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/participants_textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/right_arrow_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button_add_expense"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        app:layout_constraintBottom_toBottomOf="@+id/button_cancel_expense"
+        app:layout_constraintEnd_toEndOf="@+id/is_group_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/button_cancel_expense" />
+
+    <Button
+        android:id="@+id/button_cancel_expense"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_add_expense"
+        app:layout_constraintStart_toStartOf="@+id/is_group_checkbox"
+        app:layout_constraintTop_toBottomOf="@+id/members" />
+</androidx.constraintlayout.widget.ConstraintLayout>

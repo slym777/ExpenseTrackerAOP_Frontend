@@ -1,0 +1,406 @@
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+index 26d3352..0000000
+--- a/.idea/.gitignore
++++ /dev/null
+@@ -1,3 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+diff --git a/.idea/.name b/.idea/.name
+deleted file mode 100644
+index 8b90bd6..0000000
+--- a/.idea/.name
++++ /dev/null
+@@ -1 +0,0 @@
+-ExpenseTracker
+\ No newline at end of file
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+deleted file mode 100644
+index 61a9130..0000000
+--- a/.idea/compiler.xml
++++ /dev/null
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel target="1.8" />
+-  </component>
+-</project>
+\ No newline at end of file
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+deleted file mode 100644
+index 2370474..0000000
+--- a/.idea/jarRepositories.xml
++++ /dev/null
+@@ -1,30 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RemoteRepositoriesConfiguration">
+-    <remote-repository>
+-      <option name="id" value="central" />
+-      <option name="name" value="Maven Central repository" />
+-      <option name="url" value="https://repo1.maven.org/maven2" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="jboss.community" />
+-      <option name="name" value="JBoss Community repository" />
+-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="BintrayJCenter" />
+-      <option name="name" value="BintrayJCenter" />
+-      <option name="url" value="https://jcenter.bintray.com/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="Google" />
+-      <option name="name" value="Google" />
+-      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="maven" />
+-      <option name="name" value="maven" />
+-      <option name="url" value="https://jitpack.io" />
+-    </remote-repository>
+-  </component>
+-</project>
+\ No newline at end of file
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+index d5d35ec..f845854 100644
+--- a/.idea/misc.xml
++++ b/.idea/misc.xml
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+diff --git a/app/src/main/java/com/example/expensetracker/ui/trips/TripFragment.java b/app/src/main/java/com/example/expensetracker/ui/trips/TripFragment.java
+deleted file mode 100644
+index 49172f6..0000000
+--- a/app/src/main/java/com/example/expensetracker/ui/trips/TripFragment.java
++++ /dev/null
+@@ -1,150 +0,0 @@
+-package com.example.expensetracker.ui.trips;
+-
+-import android.os.Bundle;
+-import android.view.LayoutInflater;
+-import android.view.View;
+-import android.view.ViewGroup;
+-
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
+-import androidx.fragment.app.Fragment;
+-import androidx.lifecycle.ViewModelProvider;
+-import androidx.recyclerview.widget.GridLayoutManager;
+-import androidx.recyclerview.widget.RecyclerView;
+-
+-import com.example.expensetracker.R;
+-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+-
+-import java.util.ArrayList;
+-
+-public class TripFragment extends Fragment implements TripAdapter.OnClickTripListener {
+-
+-    private TripViewModel tripViewModel;
+-    private RecyclerView tripRecyclerView;
+-    private TripAdapter tripAdapter;
+-
+-    public View onCreateView(@NonNull LayoutInflater inflater,
+-                             ViewGroup container, Bundle savedInstanceState) {
+-        tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
+-        return inflater.inflate(R.layout.fragment_trips, container, false);
+-    }
+-
+-    @Override
+-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+-        super.onViewCreated(view, savedInstanceState);
+-
+-        tripRecyclerView = view.findViewById(R.id.ft_trips_recycler_view);
+-        tripRecyclerView.setHasFixedSize(true);
+-        tripRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+-
+-        tripAdapter = new TripAdapter(new ArrayList<>(), this);
+-        tripRecyclerView.setAdapter(tripAdapter);
+-
+-        FloatingActionButton createGroup = view.findViewById(R.id.ft_add_trip_button);
+-        createGroup.setOnClickListener(v -> {
+-            showAddHubDialog(view);
+-        });
+-
+-        tripViewModel.tripLiveList.observe(getViewLifecycleOwner(), trips -> {
+-            tripAdapter.updateRecyclerView(trips);
+-        });
+-
+-        tripViewModel.errorLiveMsg.observe(getViewLifecycleOwner(), str -> {
+-            new MaterialAlertDialogBuilder(getContext())
+-                    .setTitle("Error")
+-                    .setMessage(str)
+-                    .setPositiveButton("Got it", (dialog, which) -> dialog.dismiss())
+-                    .show();
+-        });
+-
+-        tripViewModel.getAllTrips();
+-    }
+-
+-
+-//    @Override
+-//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+-//        super.onCreateOptionsMenu(menu, inflater);
+-//        inflater.inflate(R.menu.main_filter_menu, menu);
+-//    }
+-
+-
+-    private void showAddHubDialog(View view) {
+-//        final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
+-//        LayoutInflater inflater = getActivity().getLayoutInflater();
+-//        View dialogView = inflater.inflate(R.layout.dialog_add_hub, null);
+-//
+-//        final EditText hubNameEditText = dialogView.findViewById(R.id.dah_title_text);
+-//        final EditText descEditText = dialogView.findViewById(R.id.dah_desc_text);
+-//        final TextView dahCurrencyText = dialogView.findViewById(R.id.dah_currency_text);
+-//        ConstraintLayout chooseCurrency = dialogView.findViewById(R.id.dah_currency);
+-//        Button submitButton = dialogView.findViewById(R.id.button_submit);
+-//        Button cancelButton = dialogView.findViewById(R.id.button_cancel);
+-//
+-//        dahCurrencyText.setText(SharedPreferencesUtils.retrieveMainCurrencyFromSharedPref().name);
+-//
+-//        chooseCurrency.setOnClickListener(v -> {
+-//            List<Currency> somethingList =
+-//                    new ArrayList<Currency>(EnumSet.allOf(Currency.class));
+-//            String oldCurrency = dahCurrencyText.getText().toString();
+-//            ArrayAdapter arrayAdapter = new ArrayAdapter<Currency>(getContext(), android.R.layout.select_dialog_singlechoice, somethingList);
+-//
+-//            new MaterialAlertDialogBuilder(getContext())
+-//                    .setTitle("Choose your main currency")
+-//                    .setNeutralButton("Cancel", (dialog, which) -> {
+-//                        dahCurrencyText.setText(oldCurrency);
+-//                        dialog.dismiss();
+-//                    }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+-//                @Override
+-//                public void onClick(DialogInterface dialog, int which) {
+-//                    dialog.dismiss();
+-//                }
+-//            })
+-//                    .setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+-//                        @Override
+-//                        public void onClick(DialogInterface dialog, int which) {
+-//                            Currency currency = (Currency) arrayAdapter.getItem(which);
+-//                            dahCurrencyText.setText(currency.name);
+-//                        }
+-//                    }).show();
+-//        });
+-//
+-//        submitButton.setOnClickListener(v -> {
+-//            String hubName = hubNameEditText.getText().toString();
+-//            String hubDescription = descEditText.getText().toString();
+-//            String currency = dahCurrencyText.getText().toString();
+-//            if (!TextUtils.isEmpty(hubName) && !TextUtils.isEmpty(hubDescription)) {
+-//                hubViewModel.createHub(hubName, hubDescription, currency);
+-//                dialogBuilder.dismiss();
+-//            } else {
+-//                if (TextUtils.isEmpty(hubName))
+-//                    hubNameEditText.setError("Provide hub name");
+-//                if (TextUtils.isEmpty(hubDescription))
+-//                    descEditText.setError("Provide desc description");
+-//            }
+-//        });
+-//
+-//        cancelButton.setOnClickListener(v -> {
+-//            dialogBuilder.dismiss();
+-//        });
+-//
+-//        dialogBuilder.setView(dialogView);
+-//        dialogBuilder.show();
+-    }
+-
+-
+-    @Override
+-    public void onHubClick(Long hubId, String hubName) {
+-//        Intent intent = new Intent(getActivity(), HubInfoActivity.class);
+-//        intent.putExtra(HUB_ID_EXTRA, hubId);
+-//        intent.putExtra(HUB_NAME_EXTRA, hubName);
+-//        startActivity(intent);
+-    }
+-
+-    @Override
+-    public void onResume() {
+-        super.onResume();
+-        tripViewModel.getAllTrips();
+-    }
+-
+-}
+\ No newline at end of file
+diff --git a/app/src/main/java/com/example/expensetracker/ui/trips/TripsFragment.java b/app/src/main/java/com/example/expensetracker/ui/trips/TripsFragment.java
+new file mode 100644
+index 0000000..46e5f82
+--- /dev/null
++++ b/app/src/main/java/com/example/expensetracker/ui/trips/TripsFragment.java
+@@ -0,0 +1,86 @@
++package com.example.expensetracker.ui.trips;
++
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.fragment.app.Fragment;
++import androidx.lifecycle.ViewModelProvider;
++import androidx.navigation.Navigation;
++import androidx.recyclerview.widget.GridLayoutManager;
++import androidx.recyclerview.widget.RecyclerView;
++
++import com.example.expensetracker.R;
++import com.google.android.material.dialog.MaterialAlertDialogBuilder;
++import com.google.android.material.floatingactionbutton.FloatingActionButton;
++
++import java.util.ArrayList;
++
++public class TripsFragment extends Fragment implements TripAdapter.OnClickTripListener {
++
++    private TripViewModel tripViewModel;
++    private RecyclerView tripRecyclerView;
++    private TripAdapter tripAdapter;
++
++    public View onCreateView(@NonNull LayoutInflater inflater,
++                             ViewGroup container, Bundle savedInstanceState) {
++        tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
++        return inflater.inflate(R.layout.fragment_trips, container, false);
++    }
++
++    @Override
++    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
++        super.onViewCreated(view, savedInstanceState);
++
++        tripRecyclerView = view.findViewById(R.id.ft_trips_recycler_view);
++        tripRecyclerView.setHasFixedSize(true);
++        tripRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
++
++        tripAdapter = new TripAdapter(new ArrayList<>(), this);
++        tripRecyclerView.setAdapter(tripAdapter);
++
++        FloatingActionButton createGroup = view.findViewById(R.id.ft_add_trip_button);
++        createGroup.setOnClickListener(v -> {
++            Navigation.findNavController(view).navigate(R.id.action_trips_to_addTrip);
++        });
++
++        tripViewModel.tripLiveList.observe(getViewLifecycleOwner(), trips -> {
++            tripAdapter.updateRecyclerView(trips);
++        });
++
++        tripViewModel.errorLiveMsg.observe(getViewLifecycleOwner(), str -> {
++            new MaterialAlertDialogBuilder(getContext())
++                    .setTitle("Error")
++                    .setMessage(str)
++                    .setPositiveButton("Got it", (dialog, which) -> dialog.dismiss())
++                    .show();
++        });
++
++        tripViewModel.getAllTrips();
++    }
++
++
++//    @Override
++//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
++//        super.onCreateOptionsMenu(menu, inflater);
++//        inflater.inflate(R.menu.main_filter_menu, menu);
++//    }
++
++    @Override
++    public void onHubClick(Long hubId, String hubName) {
++//        Intent intent = new Intent(getActivity(), HubInfoActivity.class);
++//        intent.putExtra(HUB_ID_EXTRA, hubId);
++//        intent.putExtra(HUB_NAME_EXTRA, hubName);
++//        startActivity(intent);
++    }
++
++    @Override
++    public void onResume() {
++        super.onResume();
++        tripViewModel.getAllTrips();
++    }
++
++}
+\ No newline at end of file
+diff --git a/app/src/main/java/com/example/expensetracker/utils/BaseApp.java b/app/src/main/java/com/example/expensetracker/utils/BaseApp.java
+index 276036b..894ca20 100644
+--- a/app/src/main/java/com/example/expensetracker/utils/BaseApp.java
++++ b/app/src/main/java/com/example/expensetracker/utils/BaseApp.java
+@@ -17,6 +17,6 @@ public class BaseApp extends Application {
+         Timber.plant(new Timber.DebugTree());
+         Timber.d("Application started !");
+         context = this;
+-        serverUrl = "http://192.168.1.205:9090";
++        serverUrl = "http://192.168.1.205:9091";
+     }
+ }
+diff --git a/app/src/main/res/navigation/mobile_navigation.xml b/app/src/main/res/navigation/mobile_navigation.xml
+index ef5e5f7..180c3ad 100644
+--- a/app/src/main/res/navigation/mobile_navigation.xml
++++ b/app/src/main/res/navigation/mobile_navigation.xml
+@@ -6,10 +6,14 @@
+     app:startDestination="@+id/navigation_home">
+ 
+     <fragment
+-        android:id="@+id/navigation_home"
+-        android:name="com.example.expensetracker.ui.trips.TripFragment"
++        android:id="@+id/navigation_trips"
++        android:name="com.example.expensetracker.ui.trips.TripsFragment"
+         android:label="@string/title_trips"
+-        tools:layout="@layout/fragment_trips" />
++        tools:layout="@layout/fragment_trips" >
++        <action
++            android:id="@+id/action_trips_to_addTrip"
++            app:destination="@id/navigation_addTrip" />
++    </fragment>
+ 
+     <fragment
+         android:id="@+id/navigation_dashboard"
+@@ -22,4 +26,11 @@
+         android:name="com.example.expensetracker.ui.notifications.NotificationsFragment"
+         android:label="@string/title_notifications"
+         tools:layout="@layout/fragment_notifications" />
++
++    <fragment
++        android:id="@+id/navigation_addTrip"
++        android:name="com.example.expensetracker.ui.trips.AddTripFragment"
++        android:label="@string/title_add_trip"
++        tools:layout="@layout/fragment_add_trip" />
++
+ </navigation>
+\ No newline at end of file
+diff --git a/app/src/main/res/values/dimens.xml b/app/src/main/res/values/dimens.xml
+index e00c2dd..fb79fa6 100644
+--- a/app/src/main/res/values/dimens.xml
++++ b/app/src/main/res/values/dimens.xml
+@@ -1,5 +1,12 @@
+ <resources>
+-    <!-- Default screen margins, per the Android Design guidelines. -->
+     <dimen name="activity_horizontal_margin">16dp</dimen>
+     <dimen name="activity_vertical_margin">16dp</dimen>
++    <dimen name="fab_margin">16dp</dimen>
++    <dimen name="space_8">8dp</dimen>
++    <dimen name="space_16">16dp</dimen>
++    <dimen name="space_32">32dp</dimen>
++    <dimen name="nav_header_vertical_spacing">30dp</dimen>
++    <dimen name="nav_header_height">200dp</dimen>
++    <dimen name="appbar_padding">8dp</dimen>
++    <dimen name="appbar_padding_top">8dp</dimen>
+ </resources>
+\ No newline at end of file
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+index b2b741f..94fbc44 100644
+--- a/app/src/main/res/values/strings.xml
++++ b/app/src/main/res/values/strings.xml
+@@ -3,4 +3,5 @@
+     <string name="title_trips">Trips</string>
+     <string name="title_dashboard">Dashboard</string>
+     <string name="title_notifications">Notifications</string>
++    <string name="title_add_trip">Add Trip</string>
+ </resources>
+\ No newline at end of file

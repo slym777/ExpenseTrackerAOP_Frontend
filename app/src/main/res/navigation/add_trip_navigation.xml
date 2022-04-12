@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_add_trip">
+
+    <fragment
+        android:id="@+id/navigation_add_trip"
+        android:name="com.example.expensetracker.ui.addtrip.AddTripFragment"
+        android:label="Add Trip"
+        tools:layout="@layout/fragment_add_trip" >
+        <action
+            android:id="@+id/action_navigation_add_trip_to_navigation_add_members"
+            app:destination="@id/navigation_add_member_view"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_member_view"
+        android:name="com.example.expensetracker.ui.addtrip.AddMembersFragment"
+        android:label="Add Members"
+        tools:layout="@layout/fragment_add_members" >
+        <action
+            android:id="@+id/action_navigation_add_members_to_navigation_add_trip"
+            app:destination="@id/navigation_add_trip"
+            app:popUpTo="@id/navigation_add_trip"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
+</navigation>

@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Expense Tracker</string>
+    <string name="title_trips">Trips</string>
+    <string name="title_statistics">Statistics</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_authentication">AuthenticationActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="shared_preferences">GeneralPreferences</string>
+    <string name="user_id_shared_pref">UserId</string>
+    <string name="email_shared_pref">Email</string>
+    <string name="fullname_shared_pref">Fullname</string>
+    <string name="phonenumber_shared_pref">Phonenumber</string>
+    <string name="username_shared_pref">Username</string>
+    <string name="id_token_shared_pref">IdToken</string>
+    <string name="is_auth_remembered_shared_pref">IsAuthRemembered</string>
+    <string name="is_account_enabled_shared_pref">IsAccountEnabled</string>
+    <string name="notif_token_shared_pref">NotificationToken</string>
+    <string name="firstAccess_sharedPref">FirstAccess</string>
+
+    <string name="camera_access_required">Camera access is required to display the camera preview.</string>
+    <string name="gallery_access_required">Read external storage is required to display the gallery.</string>
+    <string name="ok">OK</string>
+    <string name="camera_permission_not_available">Permission is not available. Requesting camera permission.</string>
+    <string name="camera_permission_available">Camera permission is available. Starting preview.</string>
+    <string name="camera_permission_granted">Camera permission was granted. Starting preview.</string>
+    <string name="camera_permission_denied">Camera permission request was denied.</string>
+    <string name="gallery_permission_denied">Read external storage permission request was denied.</string>
+    <string name="avatar_uri_shared_pref">AvatarUri</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
+    <string name="intro_page1_title">Add friends</string>
+    <string name="intro_page1_description">Add your friends by their username or by using their specific QR codes </string>
+    <string name="intro_page2_title">Create Hubs</string>
+    <string name="intro_page2_description">Create Hubs and add your friends into order to add new expenses</string>
+    <string name="intro_page3_title">Manage your debts</string>
+    <string name="intro_page3_description">You are able to create new debts or settle up the existing ones</string>
+    <string name="intro_page4_title">Simplify debts</string>
+    <string name="intro_page4_description">Use simplify function to minimise the number of transaction in a hub</string>
+    <string name="no_data_available">No data</string>
+
+
+</resources>
